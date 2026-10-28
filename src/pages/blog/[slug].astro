@@ -1,0 +1,20 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import ArticleLayout from '@/layouts/ArticleLayout.astro';
+import { getPublishedPosts } from '@/lib/content';
+import { formatDate } from '@/lib/dates';
+export const getStaticPaths = (async () => (await getPublishedPosts()).map((post) => ({
+  params: { slug: post.data.slug }, props: { post },
+}))) satisfies GetStaticPaths;
+const { post } = Astro.props as InferGetStaticPropsType<typeof getStaticPaths>;
+const { Content } = await render(post);
+const { data } = post;
+---
+<ArticleLayout title={data.title} description={data.summary} backHref="/blog/" backLabel="返回博客列表">
+  <div slot="meta" class="post-meta"><span>{data.category}</span><time datetime={data.publishedAt}>{formatDate(data.publishedAt)}</time>{data.updatedAt && <span>更新于 {formatDate(data.updatedAt)}</span>}</div>
+  {data.cover && <Image src={data.cover} alt={data.coverAlt ?? ''} widths={[720, 1440]} sizes="(max-width: 767px) 100vw, 720px" />}
+  <Content />
+</ArticleLayout>
+

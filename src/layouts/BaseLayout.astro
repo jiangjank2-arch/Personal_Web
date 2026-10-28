@@ -1,0 +1,21 @@
+---
+import SeoHead from '@/components/common/SeoHead.astro';
+import SiteHeader from '@/components/common/SiteHeader.astro';
+import SiteFooter from '@/components/common/SiteFooter.astro';
+import PointerEffects from '@/components/common/PointerEffects.astro';
+import '@/styles/global.css';
+import '@/styles/pointer-effects.css';
+interface Props { title?: string; description?: string; noindex?: boolean }
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head><SeoHead {...Astro.props} /></head>
+  <body id="top">
+    <a class="skip-link" href="#main-content">跳过导航</a>
+    <SiteHeader />
+    <main id="main-content"><slot /></main>
+    <SiteFooter />
+    <PointerEffects />
+  </body>
+</html>
+

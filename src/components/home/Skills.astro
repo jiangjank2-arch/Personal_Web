@@ -1,0 +1,11 @@
+---
+import { skills } from '@/data/skills';
+const sorted = [...skills].sort((a, b) => a.order - b.order);
+---
+<section id="skills" class="section section-tinted">
+  <div class="container">
+    <div class="section-heading"><div><p class="eyebrow">02 / TOOLKIT</p><h2>技能与工具<span class="accent-text">.</span></h2></div><span class="section-aside">示例技术栈 · 用实践说明能力</span></div>
+    <div class="skill-grid">{sorted.map((skill, i) => <article class="skill-card"><span class="skill-index">0{i + 1} / {skill.category}</span><h3>{skill.name}</h3><p>{skill.description}</p></article>)}</div>
+  </div>
+</section>
+

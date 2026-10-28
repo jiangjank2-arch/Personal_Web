@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/projects/ProjectCard.astro';
+import { getPublishedProjects } from '@/lib/content';
+import { profile } from '@/data/profile';
+const projects = await getPublishedProjects();
+const github = profile.socialLinks.find(({ label }) => label === 'GitHub');
+---
+<BaseLayout title="项目" description="项目作品与实践记录。">
+  <div class="container listing-page">
+    <header class="page-heading"><p class="eyebrow">WORK / 实践与探索</p><h1>把想法变成作品<span class="accent-text">.</span></h1><p>每一个项目，都是一次从问题走向答案的尝试。</p></header>
+    {github && <p class="github-project-intro">公开仓库与项目实践 · Fork 项目已单独标识。<br /><a class="text-link" href={github.url + '?tab=repositories'} target="_blank" rel="noopener noreferrer">在 GitHub 查看最新仓库 ↗</a></p>}
+    <div class="project-grid">{projects.map((project) => <ProjectCard project={project} />)}</div>
+    {projects.length === 0 && <p class="empty-state">还没有公开项目，作品正在整理中。</p>}
+  </div>
+</BaseLayout>
+

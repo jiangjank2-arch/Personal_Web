@@ -1,0 +1,18 @@
+---
+import { profile } from '@/data/profile';
+---
+<section id="contact" class="section container">
+  <div class="contact-panel">
+    <p class="eyebrow">05 / SAY HELLO</p>
+    <h2>下一个想法，<br />从一次交流开始<span class="accent-text">.</span></h2>
+    <p>欢迎聊聊技术、作品，或任何有趣的事情。</p>
+    <div class="actions contact-actions"><a class="email-link" href={`mailto:${profile.email}`}>{profile.email}</a><button class="button-secondary" type="button" data-copy-email={profile.email} hidden>复制邮箱</button></div>
+    <p class="copy-status" role="status" aria-live="polite"></p>
+    <p class="sample-note"></p>
+    {profile.socialLinks.length > 0 && <div class="actions">{profile.socialLinks.map(({ label, url }) => <a class="text-link" href={url} rel="noopener noreferrer" target="_blank">{label} ↗</a>)}</div>}
+  </div>
+</section>
+<script>
+  import '@/scripts/copy-email';
+</script>
+

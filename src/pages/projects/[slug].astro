@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import ArticleLayout from '@/layouts/ArticleLayout.astro';
+import { getPublishedProjects } from '@/lib/content';
+export const getStaticPaths = (async () => (await getPublishedProjects()).map((project) => ({
+  params: { slug: project.data.slug }, props: { project },
+}))) satisfies GetStaticPaths;
+const { project } = Astro.props as InferGetStaticPropsType<typeof getStaticPaths>;
+const { Content } = await render(project);
+const { data } = project;
+---
+<ArticleLayout title={data.title} description={data.summary} backHref="/projects/" backLabel="返回项目列表">
+  <div slot="meta">
+    <p class="eyebrow">{data.github ? (data.github.fork ? 'GITHUB / FORK 仓库' : 'GITHUB / 公开仓库') : 'PROJECT / 项目详情'}</p>
+    {data.github && <p class="sample-note">{data.github.repository} · 资料导入于 {data.github.importedAt}{data.github.archived && ' · 已归档'}</p>}
+    <ul class="tags">{data.techStack.map((tag) => <li>{tag}</li>)}</ul>
+  </div>
+  <div slot="links" class="actions">
+    {data.demoUrl && <a class="button-primary" href={data.demoUrl} target="_blank" rel="noopener noreferrer">在线演示 ↗</a>}
+    {data.repoUrl && <a class="button-secondary" href={data.repoUrl} target="_blank" rel="noopener noreferrer">查看源码 ↗</a>}
+  </div>
+  {data.cover && <Image src={data.cover} alt={data.coverAlt ?? ''} widths={[720, 1440]} sizes="(max-width: 767px) 100vw, 720px" />}
+  <Content />
+</ArticleLayout>
+

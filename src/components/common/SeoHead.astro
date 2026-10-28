@@ -1,0 +1,23 @@
+---
+import { site, indexable } from '@/data/site';
+import { canonicalUrl } from '@/lib/urls';
+interface Props { title?: string; description?: string; noindex?: boolean }
+const { title, description = site.description, noindex = false } = Astro.props;
+const pageTitle = title ? `${title} · ${site.title}` : site.title;
+const canonical = canonicalUrl(Astro.url.pathname);
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#080d1a" />
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={!noindex && indexable ? 'index, follow' : 'noindex, nofollow'} />
+{canonical && <link rel="canonical" href={canonical} />}
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="zh_CN" />
+{canonical && <meta property="og:url" content={canonical} />}
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+

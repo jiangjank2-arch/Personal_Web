@@ -1,0 +1,17 @@
+---
+const stars = Array.from({ length: 60 }, (_, i) => ({
+  x: (i * 73 + 13) % 100, y: (i * 37 + 9) % 100,
+  size: i % 7 === 0 ? 3 : 1.5, delay: (i % 8) * -0.8,
+}));
+---
+<div class="starfield" aria-hidden="true">
+  <div class="star-glow"></div>
+  {stars.map((star, i) => <span class:list={['star', { 'star-extra': i > 24 }]} style={`left:${star.x}%;top:${star.y}%;width:${star.size}px;height:${star.size}px;animation-delay:${star.delay}s`}></span>)}
+  <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+</div>
+<script>
+  const updateVisibility = () => document.documentElement.classList.toggle('page-hidden', document.hidden);
+  document.addEventListener('visibilitychange', updateVisibility);
+  updateVisibility();
+</script>
+

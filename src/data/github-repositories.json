@@ -1,0 +1,47 @@
+{
+  "username": "jiangjank2-arch",
+  "importedAt": "2026-10-28",
+  "source": "github-rest-api",
+  "repositories": [
+    {
+      "name": "MouseBatteryTray",
+      "description": "Windows tray icon that follows the active mouse and displays its battery level.",
+      "language": "C#",
+      "fork": false,
+      "archived": false,
+      "repoUrl": "https://github.com/jiangjank2-arch/MouseBatteryTray"
+    },
+    {
+      "name": "kaoyan-cs",
+      "description": "一个还未完善的小skill",
+      "language": "",
+      "fork": false,
+      "archived": false,
+      "repoUrl": "https://github.com/jiangjank2-arch/kaoyan-cs"
+    },
+    {
+      "name": "jiangjank2-arch",
+      "description": "",
+      "language": "",
+      "fork": false,
+      "archived": false,
+      "repoUrl": "https://github.com/jiangjank2-arch/jiangjank2-arch"
+    },
+    {
+      "name": "blackirlsama",
+      "description": "",
+      "language": "",
+      "fork": true,
+      "archived": false,
+      "repoUrl": "https://github.com/jiangjank2-arch/blackirlsama"
+    },
+    {
+      "name": "-",
+      "description": "大二数据库期末作业",
+      "language": "Java",
+      "fork": false,
+      "archived": false,
+      "repoUrl": "https://github.com/jiangjank2-arch/-"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "username": "jiangjank2-arch",
+  "projects": {
+    "MouseBatteryTray": {
+      "slug": "github-mousebatterytray",
+      "title": "MouseBatteryTray · 鼠标电量托盘",
+      "summary": "轻量 Windows 鼠标电量工具，在通知区域显示电量，并根据最近产生输入的鼠标切换设备。",
+      "techStack": [
+        "C#",
+        ".NET Framework",
+        "Windows Raw Input"
+      ],
+      "featured": true,
+      "order": -100,
+      "notes": [
+        "在 Windows 通知区域显示电池图标和电量数字。",
+        "识别最近产生输入的鼠标；支持手动刷新和固定设备。",
+        "设备未向 Windows 提供电量时显示问号，不沿用其他连接方式的旧电量。"
+      ],
+      "reference": "https://github.com/jiangjank2-arch/MouseBatteryTray#readme"
+    },
+    "kaoyan-cs": {
+      "slug": "github-kaoyan-cs",
+      "title": "kaoyan-cs · 计算机考研辅助 Skill",
+      "summary": "围绕计算机相关考研方向、考试科目、院校资料与查证方法组织的辅助 Skill，仓库标注仍在完善中。",
+      "techStack": [
+        "Markdown",
+        "AI Skill"
+      ],
+      "featured": true,
+      "order": -90,
+      "notes": [
+        "以 SKILL.md 和 references 目录组织方法与参考资料。",
+        "资料覆盖专业方向、考试科目、难度评估、时间线和信息来源。",
+        "年度招生信息需要回到官方来源核实，项目仍在持续完善。"
+      ],
+      "reference": "https://github.com/jiangjank2-arch/kaoyan-cs#readme"
+    },
+    "-": {
+      "slug": "github-academic-management",
+      "title": "教务管理系统 · 数据库课程项目",
+      "summary": "基于 Java Swing、MySQL 和 JDBC 的教务管理系统，支持管理员、教师、学生三种角色。",
+      "techStack": [
+        "Java",
+        "Swing",
+        "MySQL",
+        "JDBC"
+      ],
+      "featured": true,
+      "order": -80,
+      "notes": [
+        "管理员维护学生、教师、课程、成绩与账号信息。",
+        "教师查看所授课程并录入成绩，学生查看个人成绩与基本信息。",
+        "通过 JDBC 连接 MySQL，提供数据库初始化脚本和本地启动说明。"
+      ],
+      "reference": "https://github.com/jiangjank2-arch/-#readme"
+    },
+    "jiangjank2-arch": {
+      "slug": "github-profile",
+      "title": "jiangjank2-arch · 主页仓库",
+      "summary": "与 GitHub 账号同名的公开仓库；此处保留仓库入口，具体内容请以 GitHub 为准。",
+      "techStack": [],
+      "featured": false,
+      "order": -60
+    },
+    "blackirlsama": {
+      "slug": "github-blackirlsama",
+      "title": "blackirlsama · Fork 仓库",
+      "summary": "从 blackirlsama/blackirlsama Fork 的公开仓库。作为学习参考入口展示，原项目归属见源仓库。",
+      "techStack": [],
+      "featured": false,
+      "order": -50
+    }
+  }
+}
+

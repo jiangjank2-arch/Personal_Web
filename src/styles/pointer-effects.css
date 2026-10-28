@@ -1,0 +1,58 @@
+/* Decorative overlay; native cursor, text selection and clicks stay available. */
+.pointer-effects {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+}
+.pointer-effects *, .pointer-effects *::before { pointer-events: none; }
+.pointer-glow, .pointer-orbit, .pointer-position { position: absolute; top: 0; left: 0; width: 0; height: 0; will-change: transform; }
+.pointer-glow::before {
+  content: '';
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, #a5b4fc0c 0%, #818cf806 30%, transparent 68%);
+  transition: opacity .2s;
+}
+.pointer-ring {
+  display: block;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: -15px;
+  left: -15px;
+  border: 1px solid #a5b4fc66;
+  border-radius: 50%;
+  box-shadow: 0 0 14px #818cf818;
+  transition: transform .22s ease, border-color .22s ease, background .22s ease, opacity .2s;
+}
+.pointer-star {
+  display: block;
+  position: absolute;
+  top: 9px;
+  left: 8px;
+  width: 7px;
+  height: 7px;
+  background: #d4dfff;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  transition: opacity .2s;
+}
+.pointer-effects.is-hovering .pointer-ring { transform: scale(1.55); border-color: #c7d2fea6; background: #a5b4fc0b; }
+.pointer-effects.is-reading .pointer-ring { opacity: .18; }
+.pointer-effects.is-reading .pointer-star, .pointer-effects.is-reading .pointer-glow::before { opacity: 0; }
+.pointer-particle { position: absolute; width: 5px; height: 5px; opacity: 0; background: #c7d2fe; border-radius: 1px; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+.pointer-ripple { position: absolute; width: 28px; height: 28px; opacity: 0; border: 1px solid #a5b4fcb3; border-radius: 50%; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .project-card, .skill-card { transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease; }
+  .project-card:hover, .skill-card:hover { transform: translateY(-4px); border-color: #a5b4fc66; box-shadow: 0 12px 36px #02061755, 0 0 22px #818cf80a; }
+  .button-primary:hover { box-shadow: 0 0 24px #a5b4fc26; }
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce), (forced-colors: active) {
+  .pointer-effects { display: none !important; }
+}
+

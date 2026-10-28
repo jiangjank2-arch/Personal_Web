@@ -1,0 +1,13 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostList from '@/components/blog/PostList.astro';
+import { getPublishedPosts } from '@/lib/content';
+const posts = await getPublishedPosts();
+---
+<BaseLayout title="博客" description="关于技术、学习与创造的个人记录。">
+  <div class="container listing-page">
+    <header class="page-heading"><p class="eyebrow">JOURNAL / 学习与思考</p><h1>记录，让思考留下痕迹<span class="accent-text">.</span></h1><p>分享学习过程中的发现、实践与尚未完成的想法。</p></header>
+    <PostList posts={posts} />
+  </div>
+</BaseLayout>
+

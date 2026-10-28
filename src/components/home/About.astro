@@ -1,0 +1,11 @@
+---
+import { profile } from '@/data/profile';
+---
+<section id="about" class="section container">
+  <div class="section-heading"><div><p class="eyebrow">01 / ABOUT</p><h2>关于我<span class="accent-text">.</span></h2></div><span class="section-aside">从一个想法开始</span></div>
+  <div class="about-layout">
+    <div class="about-symbol" aria-hidden="true"><span>✦</span><small>ALWAYS CURIOUS</small></div>
+    <div class="about-copy">{profile.bio.map((paragraph) => <p>{paragraph}</p>)}<a class="text-link" href="#contact">聊聊你的想法 ↗</a></div>
+  </div>
+</section>
+
