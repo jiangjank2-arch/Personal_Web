@@ -4,10 +4,13 @@
   "tagline": "用代码探索想法，\n把灵感变成作品。",
   "avatar": "/uploads/avatar.jpg",
   "bio": [
-    "一个热爱技术和创作的开发者，喜欢用代码探索想法，并将灵感转化为实际作品。"
+    "一个热爱技术和创作的开发者，逐渐变成AI奴隶主人格。"
   ],
   "email": "2719829089@qq.com",
   "socialLinks": [
-    { "label": "GitHub", "url": "https://github.com/jiangjank2-arch" }
+    {
+      "label": "GitHub",
+      "url": "https://github.com/jiangjank2-arch"
+    }
   ]
 }
