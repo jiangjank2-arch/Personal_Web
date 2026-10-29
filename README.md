@@ -39,11 +39,53 @@ pnpm test:e2e    # 基于构建产物的浏览器冒烟测试
 - `src/assets/`：可被 Astro 优化的图片。
 - `public/`：保持公开路径的静态文件。
 - `scripts/check-content.mjs`：唯一 slug、技能关联与图片检查。
+- `functions/`：Cloudflare Pages Functions，为 `/admin/` 后台提供登录与内容读写 API。
+- `src/pages/admin/`、`src/scripts/admin.ts`：后台管理界面。
 - `tests/`：路由、交互、响应式与无 JavaScript 验证。
+
+## 在线后台管理
+
+网站提供 `/admin/` 后台（参考界面见 PRD 附图风格），可以修改个人信息、技能、项目、文章和站点设置。保存时通过 GitHub API 直接提交到仓库主分支，Cloudflare Pages 检测到提交后自动重新构建，通常约 1 分钟后线上生效。后台修改的是与手写完全相同的数据文件（`src/data/*.json` 与 `src/content/**/*.md`），两种方式可以混用。
+
+### 一次性配置
+
+1. 在 GitHub → Settings → Developer settings → Personal access tokens 创建令牌：
+   - 推荐 fine-grained token，只授权 `jiangjank2-arch/Personal_Web` 仓库，权限勾选 **Contents: Read and write**；
+   - 或 classic token，勾选 `repo` scope。
+2. 在 Cloudflare Pages 项目 → Settings → Environment variables（Production）添加：
+
+   | 变量 | 说明 |
+   | --- | --- |
+   | `ADMIN_PASSWORD` | 后台登录密码 |
+   | `ADMIN_SECRET` | 一串足够长的随机字符，用于签名登录会话 |
+   | `GITHUB_TOKEN` | 上一步创建的令牌 |
+   | `GITHUB_OWNER` | `jiangjank2-arch` |
+   | `GITHUB_REPO` | `Personal_Web` |
+   | `GITHUB_BRANCH` | `main`（默认可不设） |
+
+3. 确认 Pages 项目的部署来源连接到该 GitHub 仓库（Push 触发构建），保存变量后重新部署一次。
+
+### 使用说明
+
+- 打开 `https://<你的域名>/admin/`，输入 `ADMIN_PASSWORD` 登录；会话有效期 7 天。
+- 页面已被 `noindex` 和 robots 规则排除，不会被搜索引擎收录。
+- 所有保存都会产生一条 `[admin] ...` 提交记录；草稿默认不公开，与手写内容规则一致。
+- 删除技能前需先解除项目对它的引用，否则后台会拒绝保存（避免构建失败）。
+- 修改已发布内容的 slug 会删除旧文件、创建新文件，旧链接会失效，需要在 `public/_redirects` 补充 301。
+
+### 本地调试后台 API
+
+```sh
+cp .dev.vars.example .dev.vars   # 填入真实值；.dev.vars 已被 git 忽略
+pnpm build
+pnpm admin:dev                  # 构建后在 http://127.0.0.1:8788 启动 wrangler 本地 Pages
+```
+
+注意：本地保存会真实提交到 GitHub 并触发线上重建，请谨慎操作。
 
 ## 更新个人资料
 
-编辑 `src/data/profile.ts` 更新个人资料、邮箱及社交链接；首页主标题和个人定制文案位于 `src/components/home/Hero.astro`，技能位于 `src/data/skills.ts`。GitHub 入口和公开仓库已接入 `jiangjank2-arch`；仍标记为示例的资料、技能或文章请按实际情况替换。
+推荐直接在 `/admin/后台「个人信息」「技能管理」` 中修改，数据保存在 `src/data/profile.json` 与 `src/data/skills.json`；也可以手改这两个 JSON 文件。首页主标题和个人定制文案位于 `src/components/home/Hero.astro`。GitHub 入口和公开仓库已接入 `jiangjank2-arch`；仍标记为示例的资料、技能或文章请按实际情况替换。
 
 社交链接填写真实 HTTPS 地址。上传头像或封面到 `src/assets/` 后按需要引用。没有简历或真实社交账号时保持入口隐藏。
 
@@ -135,7 +177,7 @@ PRODUCTION_BRANCH=你的正式分支名
 
 
 
-已提供基础路由、页面框架、轻量深色星空、内容校验、响应式导航与联系交互。后续工作主要是替换真实个人资料、补充实际项目与文章，并继续打磨视觉。搜索、评论、登录、在线后台和数据库不在本次初始化范围。
+已提供基础路由、页面框架、轻量深色星空、内容校验、响应式导航与联系交互、在线内容后台。后续工作主要是替换真实个人资料、补充实际项目与文章，并继续打磨视觉。搜索、评论、访客登录和数据库不在范围内；`/admin/` 管理后台见「在线后台管理」章节。
 
 ## 仓库文件说明
 

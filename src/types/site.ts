@@ -12,7 +12,8 @@ export interface Profile {
   bio: string[];
   email: string;
   socialLinks: { label: string; url: string }[];
-  avatar?: ImageMetadata;
+  /** public 目录下的可访问路径，例如 /uploads/avatar.jpg */
+  avatar?: string;
 }
 export interface Skill {
   id: string;

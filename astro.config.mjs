@@ -26,7 +26,12 @@ export default defineConfig({
         },
       },
     },
-    ...(site ? [sitemap({ filter: (url) => !url.endsWith('/404/') && !url.endsWith('/404.html') })] : []),
+    ...(site
+      ? [sitemap({
+          filter: (url) =>
+            !url.endsWith('/404/') && !url.endsWith('/404.html') && !url.includes('/admin/'),
+        })]
+      : []),
   ],
   vite: { plugins: [tailwindcss()] },
   markdown: { shikiConfig: { theme: 'github-dark' } },

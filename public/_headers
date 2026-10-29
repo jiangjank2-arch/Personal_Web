@@ -1,0 +1,3 @@
+# 后台页面与接口不允许被搜索引擎收录。
+/admin/*
+  X-Robots-Tag: noindex, nofollow

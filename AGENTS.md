@@ -25,7 +25,8 @@
 - **代码高亮**：Astro 内置 Shiki 能力。
 - **包管理**：pnpm，提交并使用 `pnpm-lock.yaml`。
 - **部署**：Cloudflare Pages 静态托管，构建产物为 `dist/`。
-- **后端与数据库**：首版不配置。Node.js 仅用于开发与构建，资料和内容使用配置文件、Markdown 与 Git 管理。
+- **管理后台**：`/admin/` 由静态页面 + Cloudflare Pages Functions（`functions/`）组成；API 通过 GitHub Contents API 读写仓库内的 JSON/Markdown，提交后由 Pages 重新构建上线。登录为密码 + HMAC 会话 Cookie；本地用 `pnpm admin:dev`（wrangler）调试。凭据仅存于 Pages 环境变量（`ADMIN_PASSWORD`、`ADMIN_SECRET`、`GITHUB_TOKEN`、`GITHUB_OWNER`、`GITHUB_REPO`、`GITHUB_BRANCH`）与本地 `.dev.vars`，不写入代码。
+- **后端与数据库**：除上述无状态 Functions 外不配置任何后端或数据库。Node.js 仅用于开发与构建，资料和内容使用配置文件、Markdown 与 Git 管理。
 
 初始化时选择相互兼容的稳定版，在 `.node-version`、`package.json` 的 engines 与 packageManager 中记录实际版本，提交锁文件。已有项目优先遵循现有兼容版本，不随意升级主版本。使用所安装 Astro 版本支持的内容集合 API，遇到不确定接口时查阅官方文档。
 
@@ -57,12 +58,13 @@ src/
 │   ├── projects/           # 项目 Markdown
 │   └── blog/               # 博客 Markdown
 ├── content.config.ts       # 集合、加载器和 schema
-├── data/                   # site.ts、profile.ts、skills.ts
+├── data/                   # site/profile/skills 的 JSON 与 TS 包装
 ├── lib/                    # 内容查询、日期、URL 工具
-├── scripts/                # 菜单、邮箱复制
-├── styles/global.css       # Tailwind 入口、主题、正文、星空样式
+├── scripts/                # 菜单、邮箱复制、后台逻辑
+├── styles/                 # global.css 主题与 admin.css 后台样式
 └── types/                  # 共享配置类型
-public/                     # favicon、可选简历、部署重定向文件
+functions/                  # Cloudflare Pages Functions（/admin API）
+public/                     # favicon、uploads、部署重定向与 _headers
 tests/                      # 核心流程冒烟验证
 ```
 
@@ -81,6 +83,7 @@ tests/                      # 核心流程冒烟验证
 - `/blog/`、`/blog/page/{page}/` 与 `/blog/{slug}/`：博客列表、分页和文章。
 - 404 页面、全站导航、页脚、基础 SEO 和站点地图。
 - 移动端菜单、邮箱复制及操作反馈。
+- `/admin/` 管理后台：密码登录，管理个人信息、技能、项目、文章与站点设置；页面 noindex 且不进站点地图。
 
 实现约定：
 
@@ -184,6 +187,7 @@ pnpm dev
 pnpm check
 pnpm build
 pnpm preview
+pnpm admin:dev
 pnpm test:e2e
 ```
 

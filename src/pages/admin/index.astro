@@ -1,0 +1,246 @@
+---
+import '@/styles/global.css';
+import '@/styles/admin.css';
+---
+<html lang="zh-CN" class="admin-body">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="color-scheme" content="dark" />
+    <title>管理后台 · 个人作品网站</title>
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+  <body>
+    <div class="admin-login-wrap" data-login-view>
+      <form class="admin-login-card" data-login-form>
+        <h1>管理后台</h1>
+        <p>输入管理密码以修改网站内容。</p>
+        <label class="admin-field">
+          <span>管理密码</span>
+          <input class="admin-input" type="password" name="password" autocomplete="current-password" required />
+        </label>
+        <p class="admin-login-error" data-login-error role="alert"></p>
+        <button class="admin-button admin-button-primary" type="submit" style="width: 100%">进入后台</button>
+      </form>
+    </div>
+
+    <div class="admin-shell" data-app-view hidden>
+      <aside class="admin-sidebar">
+        <div class="admin-brand">管理后台</div>
+        <nav class="admin-nav" aria-label="后台导航">
+          <button type="button" data-nav="dashboard" aria-current="true">仪表盘</button>
+          <button type="button" data-nav="profile">个人信息</button>
+          <button type="button" data-nav="skills">技能管理</button>
+          <button type="button" data-nav="projects">项目管理</button>
+          <button type="button" data-nav="blog">博客管理</button>
+          <button type="button" data-nav="site">站点设置</button>
+        </nav>
+        <div class="admin-sidebar-footer">
+          <p class="admin-repo-hint" data-repo-hint></p>
+          <button class="admin-button admin-button-ghost admin-button-sm" type="button" data-logout>退出登录</button>
+          <a class="admin-repo-hint" href="/">← 返回网站</a>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <div class="admin-topbar">
+          <h1 data-view-title>仪表盘</h1>
+          <div class="admin-topbar-actions">
+            <span class="admin-repo-hint" data-save-hint></span>
+          </div>
+        </div>
+
+        <section data-view="dashboard">
+          <div class="admin-stat-grid" data-stats></div>
+          <div class="admin-card">
+            <h2>使用说明</h2>
+            <div class="admin-note" style="margin-bottom: 0">
+              <p>1. 在此页面的所有保存都会通过 GitHub API 提交到仓库主分支。</p>
+              <p>2. Cloudflare Pages 检测到提交后会自动重新构建，通常约 1 分钟后线上生效。</p>
+              <p>3. 草稿内容不会出现在公开页面；发布前请将「草稿」取消勾选并保存。</p>
+            </div>
+          </div>
+        </section>
+
+        <section data-view="profile" hidden>
+          <div class="admin-card">
+            <h2>基本信息</h2>
+            <div class="admin-grid">
+              <label class="admin-field"><span>姓名<span class="required">*</span></span><input class="admin-input" data-profile="name" /></label>
+              <label class="admin-field"><span>职位 / 头衔<span class="required">*</span></span><input class="admin-input" data-profile="role" /></label>
+            </div>
+            <label class="admin-field"><span>一句话介绍</span><textarea class="admin-textarea" data-profile="tagline" rows="2"></textarea><small>支持换行，每一行会单独展示。</small></label>
+            <div class="admin-field">
+              <span>头像</span>
+              <div class="admin-upload-row">
+                <img class="admin-avatar-preview" data-avatar-preview alt="当前头像" hidden />
+                <button class="admin-button admin-button-ghost admin-button-sm" type="button" data-avatar-upload>上传图片</button>
+                <button class="admin-button admin-button-ghost admin-button-sm" type="button" data-avatar-remove>移除</button>
+                <input type="file" accept="image/*" data-avatar-file hidden />
+              </div>
+              <small>支持 jpg / png / svg / webp 等，不超过 2MB。</small>
+            </div>
+            <div class="admin-grid">
+              <label class="admin-field"><span>邮箱<span class="required">*</span></span><input class="admin-input" type="email" data-profile="email" /></label>
+            </div>
+            <label class="admin-field"><span>个人简介</span><textarea class="admin-textarea" data-profile="bio" rows="5"></textarea><small>一段一行。</small></label>
+            <div class="admin-field">
+              <span>社交链接</span>
+              <div data-social-links></div>
+              <div><button class="admin-button admin-button-ghost admin-button-sm" type="button" data-social-add>+ 添加链接</button></div>
+            </div>
+            <div class="admin-actions">
+              <button class="admin-button admin-button-primary" type="button" data-profile-save>保存个人信息</button>
+            </div>
+          </div>
+        </section>
+
+        <section data-view="skills" hidden>
+          <div class="admin-card">
+            <h2>技能列表</h2>
+            <p class="admin-card-desc">按排序值从小到大展示在「关于我」区域。保存后立即提交到仓库。</p>
+            <div class="admin-table-wrap"><table class="admin-table" data-skills-table></table></div>
+            <div class="admin-actions" style="margin-top: 16px">
+              <button class="admin-button admin-button-ghost" type="button" data-skill-new>+ 新增技能</button>
+              <button class="admin-button admin-button-primary" type="button" data-skills-save>保存技能列表</button>
+            </div>
+          </div>
+          <div class="admin-card" data-skill-form-card hidden>
+            <h2 data-skill-form-title>编辑技能</h2>
+            <div class="admin-grid">
+              <label class="admin-field"><span>id<span class="required">*</span></span><input class="admin-input" data-skill="id" /><small>小写字母、数字和连字符，用于项目关联；保存后请勿随意更改。</small></label>
+              <label class="admin-field"><span>名称<span class="required">*</span></span><input class="admin-input" data-skill="name" /></label>
+              <label class="admin-field"><span>分类<span class="required">*</span></span><input class="admin-input" data-skill="category" /></label>
+              <label class="admin-field"><span>排序</span><input class="admin-input" type="number" data-skill="order" /></label>
+            </div>
+            <label class="admin-field"><span>说明</span><textarea class="admin-textarea" data-skill="description" rows="2"></textarea></label>
+            <div class="admin-actions">
+              <button class="admin-button admin-button-primary" type="button" data-skill-apply>应用到列表</button>
+              <button class="admin-button admin-button-ghost" type="button" data-skill-cancel>取消</button>
+            </div>
+          </div>
+        </section>
+
+        <section data-view="projects" hidden>
+          <div class="admin-card" data-content-list-card>
+            <div class="admin-editor-head">
+              <h2 style="margin: 0">项目列表</h2>
+              <button class="admin-button admin-button-primary admin-button-sm" type="button" data-project-new>+ 新建项目</button>
+            </div>
+            <div class="admin-table-wrap"><table class="admin-table" data-projects-table></table></div>
+          </div>
+          <div class="admin-card" data-project-editor hidden>
+            <div class="admin-editor-head">
+              <h2 style="margin: 0" data-project-title>编辑项目</h2>
+              <button class="admin-button admin-button-ghost admin-button-sm" type="button" data-project-back>← 返回列表</button>
+            </div>
+            <div class="admin-grid">
+              <label class="admin-field"><span>slug<span class="required">*</span></span><input class="admin-input" data-project="slug" /><small>小写字母、数字和连字符；修改 slug 会使旧链接失效。</small></label>
+              <label class="admin-field"><span>标题<span class="required">*</span></span><input class="admin-input" data-project="title" /></label>
+            </div>
+            <label class="admin-field"><span>摘要<span class="required">*</span></span><textarea class="admin-textarea" data-project="summary" rows="2"></textarea></label>
+            <div class="admin-grid">
+              <label class="admin-field"><span>技术栈</span><input class="admin-input" data-project="techStack" /><small>逗号分隔，如 Astro, TypeScript。</small></label>
+              <label class="admin-field"><span>排序（order）</span><input class="admin-input" type="number" data-project="order" /></label>
+              <label class="admin-field"><span>完成日期</span><input class="admin-input" type="date" data-project="completedAt" /></label>
+              <label class="admin-field"><span>演示链接</span><input class="admin-input" type="url" data-project="demoUrl" placeholder="https://" /></label>
+              <label class="admin-field"><span>源码链接</span><input class="admin-input" type="url" data-project="repoUrl" placeholder="https://" /></label>
+            </div>
+            <div class="admin-field">
+              <span>关联技能</span>
+              <div class="admin-skill-checks" data-project-skills></div>
+            </div>
+            <div class="admin-field">
+              <span>封面图片</span>
+              <div class="admin-upload-row">
+                <input class="admin-input" style="max-width: 360px" data-project="cover" placeholder="./images/xxx.png" />
+                <button class="admin-button admin-button-ghost admin-button-sm" type="button" data-project-cover-upload>上传封面</button>
+                <input type="file" accept="image/*" data-project-cover-file hidden />
+              </div>
+            </div>
+            <label class="admin-field"><span>封面替代文本（coverAlt）</span><input class="admin-input" data-project="coverAlt" /><small>提供封面时必填。</small></label>
+            <div class="admin-actions" style="margin-bottom: 18px">
+              <label class="admin-check"><input type="checkbox" data-project="featured" /> 设为精选项目</label>
+              <label class="admin-check"><input type="checkbox" data-project="draft" /> 草稿（不公开）</label>
+            </div>
+            <label class="admin-field"><span>正文（Markdown）</span><textarea class="admin-textarea admin-markdown" data-project="body"></textarea></label>
+            <div class="admin-actions">
+              <button class="admin-button admin-button-primary" type="button" data-project-save>保存项目</button>
+              <button class="admin-button admin-button-danger" type="button" data-project-delete>删除项目</button>
+            </div>
+          </div>
+        </section>
+
+        <section data-view="blog" hidden>
+          <div class="admin-card" data-content-list-card>
+            <div class="admin-editor-head">
+              <h2 style="margin: 0">文章列表</h2>
+              <button class="admin-button admin-button-primary admin-button-sm" type="button" data-blog-new>+ 新建文章</button>
+            </div>
+            <div class="admin-table-wrap"><table class="admin-table" data-blog-table></table></div>
+          </div>
+          <div class="admin-card" data-blog-editor hidden>
+            <div class="admin-editor-head">
+              <h2 style="margin: 0" data-blog-title>编辑文章</h2>
+              <button class="admin-button admin-button-ghost admin-button-sm" type="button" data-blog-back>← 返回列表</button>
+            </div>
+            <div class="admin-grid">
+              <label class="admin-field"><span>slug<span class="required">*</span></span><input class="admin-input" data-blog="slug" /><small>小写字母、数字和连字符；修改 slug 会使旧链接失效。</small></label>
+              <label class="admin-field"><span>标题<span class="required">*</span></span><input class="admin-input" data-blog="title" /></label>
+            </div>
+            <label class="admin-field"><span>摘要<span class="required">*</span></span><textarea class="admin-textarea" data-blog="summary" rows="2"></textarea></label>
+            <div class="admin-grid">
+              <label class="admin-field"><span>发布日期<span class="required">*</span></span><input class="admin-input" type="date" data-blog="publishedAt" /></label>
+              <label class="admin-field"><span>更新日期</span><input class="admin-input" type="date" data-blog="updatedAt" /></label>
+              <label class="admin-field"><span>分类<span class="required">*</span></span><input class="admin-input" data-blog="category" /></label>
+              <label class="admin-field"><span>标签</span><input class="admin-input" data-blog="tags" /><small>逗号分隔。</small></label>
+            </div>
+            <div class="admin-field">
+              <span>封面图片</span>
+              <div class="admin-upload-row">
+                <input class="admin-input" style="max-width: 360px" data-blog="cover" placeholder="./images/xxx.png" />
+                <button class="admin-button admin-button-ghost admin-button-sm" type="button" data-blog-cover-upload>上传封面</button>
+                <input type="file" accept="image/*" data-blog-cover-file hidden />
+              </div>
+            </div>
+            <label class="admin-field"><span>封面替代文本（coverAlt）</span><input class="admin-input" data-blog="coverAlt" /><small>提供封面时必填。</small></label>
+            <div class="admin-actions" style="margin-bottom: 18px">
+              <label class="admin-check"><input type="checkbox" data-blog="draft" /> 草稿（不公开）</label>
+            </div>
+            <label class="admin-field"><span>正文（Markdown）</span><textarea class="admin-textarea admin-markdown" data-blog="body"></textarea></label>
+            <div class="admin-actions">
+              <button class="admin-button admin-button-primary" type="button" data-blog-save>保存文章</button>
+              <button class="admin-button admin-button-danger" type="button" data-blog-delete>删除文章</button>
+            </div>
+          </div>
+        </section>
+
+        <section data-view="site" hidden>
+          <div class="admin-card">
+            <h2>站点设置</h2>
+            <div class="admin-grid">
+              <label class="admin-field"><span>站点标题<span class="required">*</span></span><input class="admin-input" data-site="title" /></label>
+              <label class="admin-field"><span>语言<span class="required">*</span></span><input class="admin-input" data-site="locale" /></label>
+            </div>
+            <label class="admin-field"><span>站点描述<span class="required">*</span></span><textarea class="admin-textarea" data-site="description" rows="2"></textarea></label>
+            <div class="admin-field">
+              <span>导航菜单</span>
+              <div data-site-nav></div>
+              <div><button class="admin-button admin-button-ghost admin-button-sm" type="button" data-site-nav-add>+ 添加导航项</button></div>
+            </div>
+            <div class="admin-note">正式域名（siteUrl）和是否允许搜索引擎索引由 Cloudflare Pages 的环境变量控制，不在这里修改。</div>
+            <div class="admin-actions">
+              <button class="admin-button admin-button-primary" type="button" data-site-save>保存站点设置</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="admin-toast" data-toast role="status" aria-live="polite"></div>
+    <script>
+      import '@/scripts/admin';
+    </script>
+  </body>
+</html>

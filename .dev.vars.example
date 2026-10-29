@@ -1,0 +1,8 @@
+# 复制为 .dev.vars 并填入真实值，供 pnpm admin:dev 本地调试后台 API。
+# 生产环境请在 Cloudflare Pages → Settings → Environment variables 中配置同名变量。
+ADMIN_PASSWORD=your-admin-password
+ADMIN_SECRET=long-random-string-for-session-signing
+GITHUB_TOKEN=github_pat_xxx
+GITHUB_OWNER=jiangjank2-arch
+GITHUB_REPO=Personal_Web
+GITHUB_BRANCH=main

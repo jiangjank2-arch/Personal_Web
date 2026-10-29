@@ -26,6 +26,10 @@ coverage/
 *.swp
 *~
 
+# Wrangler / Cloudflare 本地文件
+.wrangler/
+.dev.vars
+
 # Local credentials and private keys
 .npmrc
 *.pem

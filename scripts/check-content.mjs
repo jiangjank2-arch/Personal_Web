@@ -2,13 +2,13 @@ import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { resolve, dirname } from 'node:path';
 import matter from 'gray-matter';
-import { skills } from '../src/data/skills.ts';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 export function validateContent() {
+  const skills = JSON.parse(readFileSync(resolve(root, 'src/data/skills.json'), 'utf8'));
   const skillIds = new Set(skills.map((skill) => skill.id));
   const errors = [];
-  if (skillIds.size !== skills.length) errors.push('src/data/skills.ts: 技能 id 重复');
+  if (skillIds.size !== skills.length) errors.push('src/data/skills.json: 技能 id 重复');
   let count = 0;
   for (const collection of ['projects', 'blog']) {
     const directory = resolve(root, 'src/content', collection);

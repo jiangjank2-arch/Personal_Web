@@ -86,3 +86,10 @@ test('关闭 JavaScript 仍能浏览核心内容和导航', async ({ browser }) 
   await context.close();
 });
 
+
+test('后台页面提供登录入口且禁止收录', async ({ page }) => {
+  await page.goto('/admin/');
+  await expect(page.getByRole('heading', { name: '管理后台' })).toBeVisible();
+  await expect(page.getByLabel('管理密码')).toBeVisible();
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+});
