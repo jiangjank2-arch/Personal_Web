@@ -3,19 +3,35 @@ import SeoHead from '@/components/common/SeoHead.astro';
 import SiteHeader from '@/components/common/SiteHeader.astro';
 import SiteFooter from '@/components/common/SiteFooter.astro';
 import PointerEffects from '@/components/common/PointerEffects.astro';
+import IntroLoader from '@/components/common/IntroLoader.astro';
 import '@/styles/global.css';
 import '@/styles/pointer-effects.css';
-interface Props { title?: string; description?: string; noindex?: boolean }
+interface Props { title?: string; description?: string; noindex?: boolean; intro?: boolean }
+const { intro = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="zh-CN">
-  <head><SeoHead {...Astro.props} /></head>
+  <head>
+    <SeoHead {...Astro.props} />
+    {intro && <script is:inline>
+      (function () {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        document.documentElement.classList.add('intro-ready');
+        setTimeout(function () { document.documentElement.classList.remove('intro-ready'); }, 4500);
+      })();
+    </script>}
+  </head>
   <body id="top">
     <a class="skip-link" href="#main-content">跳过导航</a>
     <SiteHeader />
     <main id="main-content"><slot /></main>
     <SiteFooter />
     <PointerEffects />
+    {intro && <IntroLoader />}
+    <script>
+      import '@/scripts/reveal';
+      import '@/scripts/intro';
+    </script>
   </body>
 </html>
 

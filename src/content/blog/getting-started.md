@@ -1,6 +1,6 @@
 ---
 slug: getting-started
-title: 从这里开始，记录每一次探索
+title: 这里，记录每一次探索
 summary: 一篇初始化示例文章，介绍如何添加内容与发布自己的学习记录。
 publishedAt: '2026-10-27'
 category: 建站记录

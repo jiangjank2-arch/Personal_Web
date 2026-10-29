@@ -2,12 +2,34 @@
 const stars = Array.from({ length: 60 }, (_, i) => ({
   x: (i * 73 + 13) % 100, y: (i * 37 + 9) % 100,
   size: i % 7 === 0 ? 3 : 1.5, delay: (i % 8) * -0.8,
+  dx: ((i * 31) % 25) - 12, dy: ((i * 17) % 19) - 15,
+  duration: 42 + (i % 6) * 11,
 }));
+// 三条旋臂的螺旋分布，构建期算好固定坐标。
+const galaxyStars = Array.from({ length: 90 }, (_, i) => {
+  const arm = i % 3;
+  const t = Math.floor(i / 3) / 29;
+  const radius = 9 + t * 40 + ((i * 7) % 5) * 0.6;
+  const angle = arm * ((Math.PI * 2) / 3) + t * 4.6 + ((i * 11) % 7) * 0.04;
+  return {
+    left: (50 + radius * Math.cos(angle)).toFixed(2),
+    top: (50 + radius * Math.sin(angle)).toFixed(2),
+    size: i % 8 === 0 ? 3 : i % 3 === 0 ? 2 : 1.5,
+    delay: -((i % 9) * 0.9),
+  };
+});
 ---
 <div class="starfield" aria-hidden="true">
   <div class="star-glow"></div>
-  {stars.map((star, i) => <span class:list={['star', { 'star-extra': i > 24 }]} style={`left:${star.x}%;top:${star.y}%;width:${star.size}px;height:${star.size}px;animation-delay:${star.delay}s`}></span>)}
-  <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+  {stars.map((star, i) => <span class:list={['star', { 'star-extra': i > 24 }]} style={`left:${star.x}%;top:${star.y}%;width:${star.size}px;height:${star.size}px;--dx:${star.dx}px;--dy:${star.dy}px;animation:twinkle 7s ease-in-out ${star.delay}s infinite alternate,drift ${star.duration}s linear ${star.delay}s infinite alternate`}></span>)}
+  <div class="galaxy-scene">
+    <div class="galaxy">
+      <div class="galaxy-core"></div>
+      {galaxyStars.map((star) => <span class="galaxy-star" style={`left:${star.left}%;top:${star.top}%;width:${star.size}px;height:${star.size}px;animation:twinkle 6s ease-in-out ${star.delay}s infinite alternate`}></span>)}
+    </div>
+  </div>
+  <div class="shooting-star"></div>
+  <div class="shooting-star shooting-star-two"></div>
 </div>
 <script>
   const updateVisibility = () => document.documentElement.classList.toggle('page-hidden', document.hidden);

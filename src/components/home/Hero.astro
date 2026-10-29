@@ -4,16 +4,22 @@ import Starfield from '@/components/common/Starfield.astro';
 ---
 <section class="hero">
   <Starfield />
-  <div class="container hero-content">
-    <p class="eyebrow"><span class="status-dot"></span> HELLO, WORLD · 个人数字空间</p>
-    <p class="hero-intro">Hello,This is Jank<span></span></p>
-    <h1>{profile.tagline.split('\n').map((line, i) => <span class:list={{ 'accent-text': i === 1 }}>{line}</span>)}</h1>
-    <p class="hero-description">{profile.role}。在这里，分享作品、学习与思考，<br class="desktop-break" />也为下一个有趣的想法留一点空间。</p>
-    <div class="actions"><a class="button-primary" href="/projects/">探索我的项目 <span aria-hidden="true">↗</span></a><a class="button-secondary" href="/#contact">联系我-13050535341<span aria-hidden="true">→</span></a></div>
-    <p class="sample-note">I am waiting for you</p>
-    {profile.socialLinks.filter(({ label }) => label === 'GitHub').map(({ url }) => (
-      <a class="text-link" href={url} target="_blank" rel="noopener noreferrer" aria-label="访问我的 GitHub 主页">GitHub 主页 ↗</a>
-    ))}
+  <div class="container hero-grid">
+    <div class="hero-col">
+      <p class="eyebrow"><span class="status-dot"></span> PERSONAL SPACE · 个人数字空间</p>
+      <h1 class="hero-name">{profile.name}<span class="accent-text">.</span></h1>
+      <p class="hero-tagline">{profile.tagline.split('\n').map((line) => <span>{line}</span>)}</p>
+    </div>
+    <div class="hero-col hero-col-right">
+      <p class="hero-description">{profile.role}。在这里，分享作品、学习与思考，<br class="desktop-break" />也为下一个有趣的想法留一点空间。</p>
+      <div class="actions">
+        <a class="button-primary" href="/projects/">探索我的项目 <span aria-hidden="true">↗</span></a>
+        <a class="button-secondary" href="/#contact">联系我-Phone:13050535341<span aria-hidden="true">→</span></a>
+        {profile.socialLinks.filter(({ label }) => label === 'GitHub').map(({ url }) => (
+          <a class="text-link" href={url} target="_blank" rel="noopener noreferrer" aria-label="访问我的 GitHub 主页">GitHub 主页 ↗</a>
+        ))}
+      </div>
+    </div>
   </div>
   <a class="hero-scroll" href="#about"><span aria-hidden="true">↓</span> 向下探索</a>
 </section>

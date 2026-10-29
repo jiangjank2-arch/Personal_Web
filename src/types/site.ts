@@ -12,6 +12,7 @@ export interface Profile {
   bio: string[];
   email: string;
   socialLinks: { label: string; url: string }[];
+  avatar?: ImageMetadata;
 }
 export interface Skill {
   id: string;

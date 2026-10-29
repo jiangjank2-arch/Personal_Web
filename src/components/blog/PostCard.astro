@@ -1,11 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { formatDate } from '@/lib/dates';
-interface Props { post: CollectionEntry<'blog'> }
-const { post } = Astro.props;
+interface Props { post: CollectionEntry<'blog'>; revealIndex?: number }
+const { post, revealIndex } = Astro.props;
 const { data } = post;
 ---
-<article class="post-card">
+<article class="post-card" class:list={{ reveal: revealIndex !== undefined }} style={revealIndex !== undefined ? `--reveal-delay: ${revealIndex}` : undefined}>
   <a href={`/blog/${data.slug}/`}>
     <p class="post-meta"><span>{data.category}</span><time datetime={data.publishedAt}>{formatDate(data.publishedAt)}</time></p>
     <h3>{data.title}<span aria-hidden="true">↗</span></h3>

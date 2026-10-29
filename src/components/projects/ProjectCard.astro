@@ -1,11 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
-interface Props { project: CollectionEntry<'projects'> }
-const { project } = Astro.props;
+interface Props { project: CollectionEntry<'projects'>; revealIndex?: number }
+const { project, revealIndex } = Astro.props;
 const { data } = project;
 ---
-<article class="project-card">
+<article class="project-card" class:list={{ reveal: revealIndex !== undefined }} style={revealIndex !== undefined ? `--reveal-delay: ${revealIndex}` : undefined}>
   <a class="project-card-link" href={`/projects/${data.slug}/`}>
     {data.cover ? <Image src={data.cover} alt={data.coverAlt ?? ''} widths={[480, 800]} sizes="(max-width: 767px) 100vw, 50vw" class="project-cover" loading="lazy" /> : <div class="project-placeholder" aria-hidden="true"><div class="mini-window"><div class="mini-dots"><i></i><i></i><i></i></div><span class="mini-star">✦</span><div class="mini-line"></div><div class="mini-line short"></div><span class="mini-label">PERSONAL / WEB</span></div></div>}
     <div class="project-card-body">

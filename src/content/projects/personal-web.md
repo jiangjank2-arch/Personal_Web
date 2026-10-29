@@ -1,6 +1,6 @@
 ---
 slug: personal-web
-title: 星空个人网站（示例）
+title: 星空个人网站
 summary: 一个以内容为中心的个人网站骨架，连接个人介绍、技能、项目与博客。
 techStack: [Astro, TypeScript, Tailwind CSS]
 skillIds: [astro, typescript, tailwind]

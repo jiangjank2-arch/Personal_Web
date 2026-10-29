@@ -2,24 +2,23 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/home/Hero.astro';
 import About from '@/components/home/About.astro';
-import Skills from '@/components/home/Skills.astro';
 import Contact from '@/components/home/Contact.astro';
 import ProjectCard from '@/components/projects/ProjectCard.astro';
 import PostCard from '@/components/blog/PostCard.astro';
 import { getFeaturedProjects, getLatestPosts } from '@/lib/content';
 const [projects, posts] = await Promise.all([getFeaturedProjects(6), getLatestPosts(3)]);
 ---
-<BaseLayout>
-  <Hero /><About /><Skills />
+<BaseLayout intro>
+  <Hero /><About />
   <section id="projects" class="section container">
-    <div class="section-heading"><div><p class="eyebrow">03 / SELECTED WORK</p><h2>精选项目<span class="accent-text">.</span></h2></div><a class="text-link" href="/projects/">查看全部项目 ↗</a></div>
-    <div class="project-grid">{projects.map((project) => <ProjectCard project={project} />)}</div>
+    <div class="section-heading reveal"><div><p class="eyebrow">02 / SELECTED WORK</p><h2>精选项目<span class="accent-text">.</span></h2></div><a class="text-link" href="/projects/">查看全部项目 ↗</a></div>
+    <div class="project-grid">{projects.map((project, i) => <ProjectCard project={project} revealIndex={Math.min(i, 5)} />)}</div>
     {projects.length === 0 && <p class="empty-state">作品正在整理中，敬请期待。</p>}
   </section>
   <section id="blog" class="section section-tinted">
     <div class="container">
-      <div class="section-heading"><div><p class="eyebrow">04 / NOTES & THOUGHTS</p><h2>最近在写<span class="accent-text">.</span></h2></div><a class="text-link" href="/blog/">阅读全部文章 ↗</a></div>
-      <div class="post-list">{posts.map((post) => <PostCard post={post} />)}</div>
+      <div class="section-heading reveal"><div><p class="eyebrow">03 / NOTES & THOUGHTS</p><h2>最近在写<span class="accent-text">.</span></h2></div><a class="text-link" href="/blog/">阅读全部文章 ↗</a></div>
+      <div class="post-list">{posts.map((post, i) => <PostCard post={post} revealIndex={Math.min(i, 3)} />)}</div>
       {posts.length === 0 && <p class="empty-state">新的思考，正在路上。</p>}
     </div>
   </section>
